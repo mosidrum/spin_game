@@ -19,7 +19,7 @@ const btn = makerElement(output, 'button', 'SPIN', 'btn');
 
 // setting up all the game object
 
-const game ={total:4, inPlay:false, coins:100, speed:5,
+const game ={total:3, inPlay:false, coins:100, speed:5,
 totItems:4, main:[]};
 
 // listening to the DOM
@@ -44,6 +44,16 @@ function init(){
     let leftPos = (document.body.clientWidth - (game.total * 100)) / 2;
     console.log(leftPos);
     gameArea.style.left = leftPos + 'px';
+
+    for(let i = 0; i < game.total; i++){
+
+        game.main[i] = makerElement(gameArea,'div', '', 'wheel')
+        for (let x = 0; x < game.totItems; x++){
+
+            const el = makerElement(game.main[i],'div', x + 1,'box');
+        }
+        game.main[i].style.left = i * 100 + 'px';
+    }
 }
 
 function makerElement(parent, ele, html, myClass){
