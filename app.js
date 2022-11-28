@@ -1,21 +1,20 @@
 // Selecting the only div present in the html
 const output = document.querySelector('.myDiv');
-
-// Creating other elements
-const gameArea = document.createElement('div');
-const message = document.createElement('div');
-const btn = document.createElement('button');
-
-
-message.innerHTML = output.textContent;
-
-// clearing the text content of .myDiv
 output.innerHTML = '';
 
+const message = makerElement(output, 'div', 'message', 'message');
+
+const gameArea = makerElement(output, 'div', '', 'gameArea');
+
+const btn = makerElement(output, 'button', 'SPIN', 'btn');
+
+
+
+// clearing the text content of .myDiv
+
+
 // sending the created elements to .myDiv
-output.append(btn);
-output.append(message);
-output.append(gameArea);
+
 
 
 // setting up all the game object
@@ -23,7 +22,9 @@ output.append(gameArea);
 const game ={total:4, inPlay:false, coins:100, speed:5,
 totItems:4, main:[]};
 
-btn.textContent ='SPIN';
+// listening to the DOM
+window.addEventListener('DOMContentLoaded', init);
+
 
 // clicking the button to spin or stop
 btn.addEventListener('click',(e)=>{
@@ -37,6 +38,17 @@ btn.addEventListener('click',(e)=>{
 
 })
 
+function init(){
+    console.log('ready');
+}
+
+function makerElement(parent, ele, html, myClass){
+    const el = document.createElement(ele);
+    el.classList.add(myClass);
+    el.innerHTML = html;
+    parent.append(el);
+    return el;
+}
 
 function startSpin(){
     console.log('spinning ' + game.inPlay);
