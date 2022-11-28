@@ -1,8 +1,27 @@
+*{
+    box-sizing: border-box;
+}
+.box{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    top: 0;
+    left: 0;
+    font-size: 3em;
+    line-height: 100px;
+    text-align: center;
+}
+.wheel{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 .gameArea{
     position: absolute;
     left: 0px;
     top: 100px;
     width: 300px;
-    height: 100px;
-    border: 1px solid black;
+    height: 103px;
+    border: 1px solid red;
 }

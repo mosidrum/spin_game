@@ -20,7 +20,7 @@ const btn = makerElement(output, 'button', 'SPIN', 'btn');
 // setting up all the game object
 
 const game ={total:3, inPlay:false, coins:100, speed:5,
-totItems:4, main:[]};
+totItems:8, main:[]};
 
 // listening to the DOM
 window.addEventListener('DOMContentLoaded', init);
@@ -33,6 +33,7 @@ btn.addEventListener('click',(e)=>{
         startSpin();
     }else{
         game.inPlay = false;
+        cancelAnimationFrame(game.ani);
         btn.textContent = 'SPIN'
     }
 
@@ -65,5 +66,13 @@ function makerElement(parent, ele, html, myClass){
 }
 
 function startSpin(){
+    game.inPlay = true;
     console.log('spinning ' + game.inPlay);
+
+    game.ani = requestAnimationFrame(spin);
+}
+
+function spin(){
+    console.log('running');
+    game.ani = requestAnimationFrame(spin);
 }
