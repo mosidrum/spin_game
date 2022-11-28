@@ -1,6 +1,6 @@
 // Selecting the only div present in the html
 const output = document.querySelector('.myDiv');
-output.innerHTML = '';
+output.innerHTML = document.body.clientWidth;
 
 const message = makerElement(output, 'div', 'message', 'message');
 
@@ -40,6 +40,10 @@ btn.addEventListener('click',(e)=>{
 
 function init(){
     console.log('ready');
+    gameArea.style.width = game.total * 100 + 'px';
+    let leftPos = (document.body.clientWidth - (game.total * 100)) / 2;
+    console.log(leftPos);
+    gameArea.style.left = leftPos + 'px';
 }
 
 function makerElement(parent, ele, html, myClass){
