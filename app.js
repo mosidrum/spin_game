@@ -1,6 +1,6 @@
 // Selecting the only div present in the html
 const output = document.querySelector('.myDiv');
-output.innerHTML = document.body.clientWidth;
+output.innerHTML = '';
 
 const message = makerElement(output, 'div', 'message', 'message');
 
@@ -9,21 +9,13 @@ const gameArea = makerElement(output, 'div', '', 'gameArea');
 const btn = makerElement(output, 'button', 'SPIN', 'btn');
 
 
-
-// clearing the text content of .myDiv
-
-
-// sending the created elements to .myDiv
-
-
-
 // setting up all the game object
 
 const game = {
     total: 3, inPlay: false, coins: 100, speed: 5,
     totItems: 8, main: []
 };
-let spinner = 10;
+let spinner = 500;
 
 // listening to the DOM
 window.addEventListener('DOMContentLoaded', init);
@@ -33,21 +25,24 @@ window.addEventListener('DOMContentLoaded', init);
 btn.addEventListener('click', (e) => {
     if (btn.textContent == 'SPIN' && !game.inPlay) {
         btn.textContent = 'STOP'
-        spinner = 10;
+        btn.style.backgroundColor = 'red';
+        spinner = 500;
         startSpin();
     } else {
         game.inPlay = false;
         cancelAnimationFrame(game.ani);
+        btn.style.backgroundColor = 'green';
         btn.textContent = 'SPIN'
     }
 
 })
 
 function init() {
-    console.log('ready');
+    //console.log('ready');
+    btn.style.backgroundColor = 'green';
     gameArea.style.width = game.total * 100 + 'px';
     let leftPos = (document.body.clientWidth - (game.total * 100)) / 2;
-    console.log(leftPos);
+    //console.log(leftPos);
     gameArea.style.left = leftPos + 'px';
 
     for (let i = 0; i < game.total; i++) {
@@ -69,11 +64,17 @@ function makerElement(parent, ele, html, myClass) {
     return el;
 }
 
+function updateMessage(html){
+    message.innerHTML = html;
+}
 function startSpin() {
+    game.coins --;
+    updateMessage(`You have ${game.coins} left.`)
     game.inPlay = true;
-    console.log('spinning ' + game.inPlay);
+    spinner = 500;
+    //console.log('spinning ' + game.inPlay);
     for (let i = 0; i < game.total; i++) {
-        game.main[i].mover = Math.floor(Math.random() * 20);
+        game.main[i].mover = Math.floor(Math.random() * 50) + 10;
     }
     game.ani = requestAnimationFrame(spin);
 }
@@ -86,16 +87,21 @@ function spin() {
         btn.textContent = 'SPIN'
     }
     if (game.inPlay) {
-        console.log('running');
+        //console.log('running');
         let holder = [];
         for (let i = 0; i < game.total; i++) {
             let el = game.main[i];
             let elY = el.offsetTop;
-            console.log(el.offsetTop)
+            //console.log(el.offsetTop)
             if (el.mover > 0) {
                 el.mover--;
-                console.log(el.mover);
+                //console.log(el.mover);
                 elY += game.speed;
+                if (elY > -150){
+                    elY -= 100;
+                    const last = el.lastElementChild;
+                    el.prepend(last);
+                }
                 el.style.top = elY + 'px';
             }
         }
