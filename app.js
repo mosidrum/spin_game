@@ -29,10 +29,8 @@ btn.addEventListener('click', (e) => {
         spinner = 500;
         startSpin();
     } else {
-        game.inPlay = false;
-        cancelAnimationFrame(game.ani);
-        btn.style.backgroundColor = 'green';
-        btn.textContent = 'SPIN'
+        stopGamePlay();
+
     }
 
 })
@@ -51,6 +49,7 @@ function init() {
         for (let x = 0; x < game.totItems; x++) {
 
             const el = makerElement(game.main[i], 'div', x + 1, 'box');
+            el.faceValue = x + 1
         }
         game.main[i].style.left = i * 100 + 'px';
     }
@@ -82,9 +81,7 @@ function startSpin() {
 function spin() {
     spinner--;
     if (spinner <= 0) {
-        game.inPlay = false;
-        cancelAnimationFrame(game.ani);
-        btn.textContent = 'SPIN'
+        stopGamePlay();
     }
 
         //console.log('running');
@@ -102,13 +99,35 @@ function spin() {
                     const last = el.lastElementChild;
                     el.prepend(last);
                 }
-                if (el.mover == 0 && elY % 50 != 0)
-                el.mover++;
+                if (el.mover == 0 && elY % 50 != 0){
+                     el.mover++;}
+                el.style.top = elY + 'px';
+            }else{
+                let viewEl = el.children[2];
+                let outputVal = elY == -200 ? viewEl.faceValue : '-';
+                let tempObj = {
+                    'txt' : viewEl.faceValue,
+                    'elY' : elY,
+                    'outputV' : outputVal,
+                    'output' : viewEl.textContent
+                }
+                holder.push(tempObj);
             }
-            el.style.top = elY + 'px';
+        }
+
+        if (holder.length >= game.total){
+            stopGamePlay();
+            holder.sort();
+            console.log(holder);
         }
         if (game.inPlay) {
         game.ani = requestAnimationFrame(spin);
     }
 
+}
+function stopGamePlay(){
+    game.inPlay = false;
+    cancelAnimationFrame(game.ani);
+    btn.textContent = 'SPIN';
+    btn.style.backgroundColor = 'green';
 }
