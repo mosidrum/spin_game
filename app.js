@@ -86,7 +86,7 @@ function spin() {
         cancelAnimationFrame(game.ani);
         btn.textContent = 'SPIN'
     }
-    if (game.inPlay) {
+
         //console.log('running');
         let holder = [];
         for (let i = 0; i < game.total; i++) {
@@ -102,9 +102,12 @@ function spin() {
                     const last = el.lastElementChild;
                     el.prepend(last);
                 }
-                el.style.top = elY + 'px';
+                if (el.mover == 0 && elY % 50 != 0)
+                el.mover++;
             }
+            el.style.top = elY + 'px';
         }
+        if (game.inPlay) {
         game.ani = requestAnimationFrame(spin);
     }
 
