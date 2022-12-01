@@ -2,11 +2,10 @@
 const output = document.querySelector('.myDiv');
 output.innerHTML = '';
 
-const message = makerElement(output, 'div', 'message', 'message');
-
 const gameArea = makerElement(output, 'div', '', 'gameArea');
 
 const btn = makerElement(output, 'button', 'SPIN', 'btn');
+const message = makerElement(output, 'div', 'message', 'message');
 
 
 // setting up all the game object

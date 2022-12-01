@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Spectral:ital,wght@1,700;1,800&display=swap');
 *{
     box-sizing: border-box;
+}
+body{
+    font-family: spectral;
 }
 .box{
     position: relative;
@@ -14,7 +18,7 @@
 }
 .message{
     text-align: center;
-    font-size: 2em;
+    font-size: 1.2em;
 }
 .btn{
     margin: auto;
@@ -24,6 +28,7 @@
     color: white;
     border-radius: 25px;
     font-size: 1.5em;
+    font-family: spectral;
 }
 .wheel{
     position: absolute;
@@ -33,10 +38,12 @@
 .gameArea{
     position: absolute;
     left: 0px;
-    top: 130px;
+    top: 30px;
     width: 300px;
     height: 103px;
     border: 1px solid red;
     overflow: hidden;
-    margin: ;
+}
+.myDiv{
+    margin-top: 190px;
 }
