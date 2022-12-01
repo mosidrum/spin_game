@@ -122,10 +122,10 @@ function spin() {
             const myObj ={};
             holder.forEach((val)=>{
                 if (val.outputV != '-'){
-                    if(myObj.outputV){
+                    if(myObj[val.outputV]){
                         myObj[val.outputV]++;
                     }else{
-                        myObj[val.output] = 1;
+                        myObj[val.outputV] = 1;
                     }
                 }
             });
@@ -141,15 +141,15 @@ function payout(score){
     for (const prop in score){
         let val = Number(score[prop]);
         console.log(prop + 'x' + val);
-        let basePay = game.total / 2;
-        if (val => 2){
+        let basePay = game.total /2;
+        if (val >= 2){
             let totalPaid = Math.floor(val * basePay);
             if (prop == '2'){
                 console.log('You got more than 2 - 2s');
                 totalPaid *= 5;
             }
             game.coins += totalPaid;
-            let html = `Matched item ${prop} X ${val} Payout ${totalPaid} Coins ${game.coins}`;
+            let html = `Number ${prop} is out ${val} times. Payout ${totalPaid} Coins ${game.coins}`;
             updateMessage(html);
         }
 
