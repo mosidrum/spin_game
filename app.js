@@ -12,8 +12,8 @@ const btn = makerElement(output, 'button', 'SPIN', 'btn');
 // setting up all the game object
 
 const game = {
-    total: 3, inPlay: false, coins: 100, speed: 5,
-    totItems: 8, main: []
+    total: 4, inPlay: false, coins: 100, speed: 5,
+    totItems: 3, main: []
 };
 let spinner = 500;
 
@@ -119,12 +119,43 @@ function spin() {
             stopGamePlay();
             holder.sort();
             console.log(holder);
+            const myObj ={};
+            holder.forEach((val)=>{
+                if (val.outputV != '-'){
+                    if(myObj.outputV){
+                        myObj[val.outputV]++;
+                    }else{
+                        myObj[val.output] = 1;
+                    }
+                }
+            });
+            payout(myObj);
         }
         if (game.inPlay) {
         game.ani = requestAnimationFrame(spin);
     }
 
 }
+
+function payout(score){
+    for (const prop in score){
+        let val = Number(score[prop]);
+        console.log(prop + 'x' + val);
+        let basePay = game.total / 2;
+        if (val => 2){
+            let totalPaid = Math.floor(val * basePay);
+            if (prop == '2'){
+                console.log('You got more than 2 - 2s');
+                totalPaid *= 5;
+            }
+            game.coins += totalPaid;
+            let html = `Matched item ${prop} X ${val} Payout ${totalPaid} Coins ${game.coins}`;
+            updateMessage(html);
+        }
+
+    }
+}
+
 function stopGamePlay(){
     game.inPlay = false;
     cancelAnimationFrame(game.ani);
