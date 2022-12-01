@@ -13,7 +13,7 @@ const btn = makerElement(output, 'button', 'SPIN', 'btn');
 
 const game = {
     total: 4, inPlay: false, coins: 100, speed: 5,
-    totItems: 3, main: []
+    totItems: 4, main: []
 };
 let spinner = 500;
 
