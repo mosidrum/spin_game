@@ -2,6 +2,8 @@
 const output = document.querySelector('.myDiv');
 output.innerHTML = '';
 
+const iconImages = ['<i class="fa-solid fa-heart"></i>', '<i class="fa-solid fa-leaf"></i>', '<i class="fa-solid fa-dice-four"></i>', '<i class="fa-brands fa-apple"></i>', '<i class="fa-solid fa-fish"></i>'];
+
 const gameArea = makerElement(output, 'div', '', 'gameArea');
 
 const btn = makerElement(output, 'button', 'SPIN', 'btn');
@@ -11,8 +13,8 @@ const message = makerElement(output, 'div', 'message', 'message');
 // setting up all the game object
 
 const game = {
-    total: 4, inPlay: false, coins: 100, speed: 5,
-    totItems: 4, main: []
+    total: 4, inPlay: false, coins: 100, speed: 15,
+    totItems: iconImages.length, main: []
 };
 let spinner = 500;
 
@@ -47,7 +49,24 @@ function init() {
         game.main[i] = makerElement(gameArea, 'div', '', 'wheel')
         for (let x = 0; x < game.totItems; x++) {
 
-            const el = makerElement(game.main[i], 'div', x + 1, 'box');
+            const el = makerElement(game.main[i], 'div', iconImages[x], 'box');
+            let myColor = x > 4  ? 'black' : 'gray';
+            if (x == 0) {
+                myColor = 'purple';
+            }
+            if (x == 1){
+                myColor = 'green';
+            }
+            if (x == 2){
+                myColor = 'blue';
+            }
+            if (x == 3) {
+                myColor = 'orange'
+            }
+            if (x == 4){
+                myColor = 'red';
+            }
+            el.style.color = myColor;
             el.faceValue = x + 1
         }
         game.main[i].style.left = i * 100 + 'px';
@@ -62,11 +81,11 @@ function makerElement(parent, ele, html, myClass) {
     return el;
 }
 
-function updateMessage(html){
+function updateMessage(html) {
     message.innerHTML = html;
 }
 function startSpin() {
-    game.coins --;
+    game.coins--;
     updateMessage(`You have ${game.coins} left.`)
     game.inPlay = true;
     spinner = 500;
@@ -83,67 +102,68 @@ function spin() {
         stopGamePlay();
     }
 
-        //console.log('running');
-        let holder = [];
-        for (let i = 0; i < game.total; i++) {
-            let el = game.main[i];
-            let elY = el.offsetTop;
-            //console.log(el.offsetTop)
-            if (el.mover > 0) {
-                el.mover--;
-                //console.log(el.mover);
-                elY += game.speed;
-                if (elY > -150){
-                    elY -= 100;
-                    const last = el.lastElementChild;
-                    el.prepend(last);
-                }
-                if (el.mover == 0 && elY % 50 != 0){
-                     el.mover++;}
-                el.style.top = elY + 'px';
-            }else{
-                let viewEl = el.children[2];
-                let outputVal = elY == -200 ? viewEl.faceValue : '-';
-                let tempObj = {
-                    'txt' : viewEl.faceValue,
-                    'elY' : elY,
-                    'outputV' : outputVal,
-                    'output' : viewEl.textContent
-                }
-                holder.push(tempObj);
+    //console.log('running');
+    let holder = [];
+    for (let i = 0; i < game.total; i++) {
+        let el = game.main[i];
+        let elY = el.offsetTop;
+        //console.log(el.offsetTop)
+        if (el.mover > 0) {
+            el.mover--;
+            //console.log(el.mover);
+            elY += game.speed;
+            if (elY > -150) {
+                elY -= 100;
+                const last = el.lastElementChild;
+                el.prepend(last);
             }
+            if (el.mover == 0 && elY % 50 != 0) {
+                el.mover++;
+            }
+            el.style.top = elY + 'px';
+        } else {
+            let viewEl = el.children[2];
+            let outputVal = elY == -200 ? viewEl.faceValue : '-';
+            let tempObj = {
+                'txt': viewEl.faceValue,
+                'elY': elY,
+                'outputV': outputVal,
+                'output': viewEl.textContent
+            }
+            holder.push(tempObj);
         }
+    }
 
-        if (holder.length >= game.total){
-            stopGamePlay();
-            holder.sort();
-            console.log(holder);
-            const myObj ={};
-            holder.forEach((val)=>{
-                if (val.outputV != '-'){
-                    if(myObj[val.outputV]){
-                        myObj[val.outputV]++;
-                    }else{
-                        myObj[val.outputV] = 1;
-                    }
+    if (holder.length >= game.total) {
+        stopGamePlay();
+        holder.sort();
+        console.log(holder);
+        const myObj = {};
+        holder.forEach((val) => {
+            if (val.outputV != '-') {
+                if (myObj[val.outputV]) {
+                    myObj[val.outputV]++;
+                } else {
+                    myObj[val.outputV] = 1;
                 }
-            });
-            payout(myObj);
-        }
-        if (game.inPlay) {
+            }
+        });
+        payout(myObj);
+    }
+    if (game.inPlay) {
         game.ani = requestAnimationFrame(spin);
     }
 
 }
 
-function payout(score){
-    for (const prop in score){
+function payout(score) {
+    for (const prop in score) {
         let val = Number(score[prop]);
         console.log(prop + 'x' + val);
-        let basePay = game.total /2;
-        if (val >= 2){
+        let basePay = game.total / 2;
+        if (val >= 2) {
             let totalPaid = Math.floor(val * basePay);
-            if (prop == '2'){
+            if (prop == '2') {
                 console.log('You got more than 2 - 2s');
                 totalPaid *= 5;
             }
@@ -155,7 +175,7 @@ function payout(score){
     }
 }
 
-function stopGamePlay(){
+function stopGamePlay() {
     game.inPlay = false;
     cancelAnimationFrame(game.ani);
     btn.textContent = 'SPIN';
