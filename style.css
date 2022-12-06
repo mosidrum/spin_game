@@ -1,9 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Spectral:ital,wght@1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanalei&family=Roboto+Slab&display=swap');
+
 *{
     box-sizing: border-box;
 }
 body{
-    font-family: spectral;
+    font-family: 'Roboto Slab', serif;
 }
 .box{
     position: relative;
@@ -15,6 +17,7 @@ body{
     font-size: 3em;
     line-height: 100px;
     text-align: center;
+    font-family: 'Hanalei', cursive;
 }
 .message{
     text-align: center;
