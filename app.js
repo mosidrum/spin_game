@@ -1,8 +1,12 @@
 // Selecting the only div present in the html
 const output = document.querySelector('.myDiv');
-output.innerHTML = '';
+
 
 const iconImages = ['<i class="fa-solid fa-heart"></i>', '<i class="fa-solid fa-leaf"></i>', '<i class="fa-solid fa-dice-four"></i>', '<i class="fa-brands fa-apple"></i>', '<i class="fa-solid fa-fish"></i>'];
+
+output.innerHTML = '';
+
+const MessageTop = makerElement(output, 'div', 'SPIN GAME', 'topMessage');
 
 const gameArea = makerElement(output, 'div', '', 'gameArea');
 
@@ -13,7 +17,7 @@ const message = makerElement(output, 'div', 'message', 'message');
 // setting up all the game object
 
 const game = {
-    total: 4, inPlay: false, coins: 100, speed: 15,
+    total: 4, inPlay: false, coins: 100, speed: 18,
     totItems: iconImages.length, main: []
 };
 let spinner = 500;
@@ -91,7 +95,7 @@ function startSpin() {
     spinner = 500;
     //console.log('spinning ' + game.inPlay);
     for (let i = 0; i < game.total; i++) {
-        game.main[i].mover = Math.floor(Math.random() * 50) + 10;
+        game.main[i].mover = Math.floor(Math.random() * 200) + 10;
     }
     game.ani = requestAnimationFrame(spin);
 }
